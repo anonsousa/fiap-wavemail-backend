@@ -1,0 +1,66 @@
+package br.com.fiap.wavemail.domain.service;
+
+import br.com.fiap.wavemail.domain.dto.user.UserAddDto;
+import br.com.fiap.wavemail.domain.dto.user.UserReturnDto;
+import br.com.fiap.wavemail.domain.model.UserEntity;
+import br.com.fiap.wavemail.domain.repository.UserEntityRepository;
+import br.com.fiap.wavemail.infra.exceptions.InvalidPasswordException;
+import br.com.fiap.wavemail.infra.exceptions.ItemNotFoundException;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserEntityRepository userRepository;
+
+    @Transactional
+    public UserReturnDto createUser(UserAddDto user){
+        UserEntity userEntity = new UserEntity();
+        BeanUtils.copyProperties(user, userEntity);
+        userEntity.setCreatedAt(LocalDateTime.now().withNano(0));
+
+        userRepository.save(userEntity);
+
+        return new UserReturnDto(userEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public UserReturnDto getUserById(UUID id){
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found!"));
+        return new UserReturnDto(userEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserReturnDto> getAllusers(Pageable pageable){
+        Page<UserEntity> userEntityPage = userRepository.findAll(pageable);
+        return userEntityPage.map(UserReturnDto::new);
+    }
+
+    @Transactional
+    public UserReturnDto updateUser(UUID id, UserAddDto user){
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found!"));
+
+        if(userEntity.getPassword().equals(user.password())){
+            BeanUtils.copyProperties(user, userEntity);
+            return new UserReturnDto(userEntity);
+        } else {
+            throw new InvalidPasswordException("Invalid Password!");
+        }
+    }
+
+    @Transactional
+    public void deleteUser(UUID id){
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found!"));
+        userEntity.setEnabled(false);
+        userRepository.save(userEntity);
+    }
+}
