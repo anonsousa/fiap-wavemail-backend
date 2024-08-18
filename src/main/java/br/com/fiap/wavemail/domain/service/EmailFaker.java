@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class EmailFaker {
@@ -19,11 +20,11 @@ public class EmailFaker {
     public static final Faker FAKER = new Faker();
 
     @Transactional
-    public void generateRandomEmail() {
+    public void generateRandomEmail(String email) {
         EmailEntity emailEntity = new EmailEntity();
 
         emailEntity.setFrom(FAKER.internet().emailAddress());
-        emailEntity.setTo(FAKER.internet().emailAddress());
+        emailEntity.setTo(List.of(email));
         emailEntity.setSubject(FAKER.lorem().sentence(10));
         emailEntity.setBody(FAKER.lorem().paragraph(20));
         emailEntity.setDate(LocalDateTime.now().withNano(0));
@@ -34,7 +35,6 @@ public class EmailFaker {
         emailEntity.setRead(false);
         emailEntity.setSent(false);
 
-        System.out.println(emailEntity);
         emailRepository.save(emailEntity);
     }
 }

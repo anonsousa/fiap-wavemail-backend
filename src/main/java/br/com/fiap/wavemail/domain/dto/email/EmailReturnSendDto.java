@@ -5,23 +5,21 @@ import br.com.fiap.wavemail.domain.enums.EmailType;
 import br.com.fiap.wavemail.domain.model.EmailEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
-public record EmailReturnDto(
+public record EmailReturnSendDto(
 
         UUID id,
         String from,
-        String to,
+        List<String> to,
         String subject,
         String body,
         LocalDateTime date,
-        EmailType type,
-        EmailPriority priority,
-        boolean isRead,
-        boolean isSent
+        EmailPriority priority
 ) {
 
-    public EmailReturnDto(EmailEntity email) {
+    public EmailReturnSendDto(EmailEntity email) {
         this(
                 email.getId(),
                 email.getFrom(),
@@ -29,11 +27,9 @@ public record EmailReturnDto(
                 email.getSubject(),
                 email.getBody(),
                 email.getDate(),
-                email.getType(),
-                email.getPriority(),
-                email.isRead(),
-                email.isSent()
+                email.getPriority()
         );
     }
 
 }
+

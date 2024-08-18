@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -28,8 +29,17 @@ public class EmailEntity implements Serializable {
 
     @Column(name = "email_from")
     private String from;
-    @Column(name = "email_to")
-    private String to;
+
+    @ElementCollection
+    @CollectionTable(name = "email_recipients", joinColumns = @JoinColumn(name = "email_id"))
+    @Column(name = "recipient_email")
+    private List<String> to;
+
+    @ElementCollection
+    @CollectionTable(name = "hidden_to_users", joinColumns = @JoinColumn(name = "email_id"))
+    @Column(name = "user_id")
+    private List<UUID> hiddenTo;
+
     @Column(length = 400)
     private String subject;
     @Column(columnDefinition = "TEXT")

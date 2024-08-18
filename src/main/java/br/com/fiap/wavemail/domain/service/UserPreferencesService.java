@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,8 +38,13 @@ public class UserPreferencesService {
 
     @Transactional(readOnly = true)
     public UserPreferencesReturnDto getUserPreferences(UUID id) {
-        UserPreferences userPreferences = userPreferencesRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found"));
-        return new UserPreferencesReturnDto(userPreferences);
+        Optional<UserPreferences> userPreferencesOptional = userPreferencesRepository.findByUserId(id);
+
+        if (userPreferencesOptional.isPresent()) {
+            return new UserPreferencesReturnDto(userPreferencesOptional.get());
+        } else {
+            throw new ItemNotFoundException("User not found");
+        }
     }
 
     @Transactional
