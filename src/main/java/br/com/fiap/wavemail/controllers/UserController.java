@@ -3,6 +3,8 @@ package br.com.fiap.wavemail.controllers;
 import br.com.fiap.wavemail.domain.dto.user.UserAddDto;
 import br.com.fiap.wavemail.domain.dto.user.UserReturnDto;
 import br.com.fiap.wavemail.domain.service.UserService;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.ConsumptionProbe;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private Bucket bucket;
 
     @PostMapping
     public ResponseEntity<UserReturnDto> createUser(@RequestBody @Valid UserAddDto user){

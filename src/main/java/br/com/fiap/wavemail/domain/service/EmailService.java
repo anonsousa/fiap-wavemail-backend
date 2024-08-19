@@ -3,10 +3,9 @@ package br.com.fiap.wavemail.domain.service;
 import br.com.fiap.wavemail.domain.dto.email.EmailAddDto;
 import br.com.fiap.wavemail.domain.dto.email.EmailReturnReceivedDto;
 import br.com.fiap.wavemail.domain.dto.email.EmailReturnSendDto;
-import br.com.fiap.wavemail.domain.enums.EmailType;
 import br.com.fiap.wavemail.domain.model.EmailEntity;
 import br.com.fiap.wavemail.domain.model.UserEntity;
-import br.com.fiap.wavemail.domain.repository.EmailRepository;
+import br.com.fiap.wavemail.domain.repository.EmailEntityRepository;
 import br.com.fiap.wavemail.domain.repository.UserEntityRepository;
 import br.com.fiap.wavemail.infra.exceptions.ItemNotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -18,12 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class EmailService {
     @Autowired
-    private EmailRepository emailRepository;
+    private EmailEntityRepository emailEntityRepository;
 
     @Autowired
     private UserEntityRepository userEntityRepository;
@@ -44,7 +42,7 @@ public class EmailService {
         emailEntity.setDate(LocalDateTime.now().withNano(0));
         emailEntity.setSent(true);
 
-        return new EmailReturnSendDto(emailRepository.save(emailEntity));
+        return new EmailReturnSendDto(emailEntityRepository.save(emailEntity));
     }
 
     @Transactional
@@ -53,14 +51,14 @@ public class EmailService {
         String userEmail = userEntity.getEmail();
 
         emailFaker.generateRandomEmail(userEmail);
-        Page<EmailEntity> emailEntity = emailRepository.findByRecipientAndIsSentFalseAndUserNotHidden(userEmail, userEntity.getId(), pageable);
+        Page<EmailEntity> emailEntity = emailEntityRepository.findByRecipientAndIsSentFalseAndUserNotHidden(userEmail, userEntity.getId(), pageable);
 
         return emailEntity.map(EmailReturnReceivedDto::new);
     }
 
     @Transactional(readOnly = true)
     public EmailReturnReceivedDto getReceivedEmail(UUID userId, UUID mailId) {
-        EmailEntity emailEntity = emailRepository.findById(mailId)
+        EmailEntity emailEntity = emailEntityRepository.findById(mailId)
                 .orElseThrow(() -> new ItemNotFoundException("Email not found!"));
 
         UserEntity userEntity = userEntityRepository.findById(userId)
@@ -78,7 +76,7 @@ public class EmailService {
         UserEntity userEntity = userEntityRepository.findById(userId)
                 .orElseThrow(() -> new ItemNotFoundException("User not found!"));
 
-        EmailEntity emailEntity = emailRepository.findById(mailId).orElseThrow(() -> new ItemNotFoundException("Email not found!"));
+        EmailEntity emailEntity = emailEntityRepository.findById(mailId).orElseThrow(() -> new ItemNotFoundException("Email not found!"));
 
         List<UUID> hiddenToList = emailEntity.getHiddenTo();
 
@@ -91,7 +89,7 @@ public class EmailService {
             hiddenToList.add(userId);
         }
 
-        emailRepository.save(emailEntity);
+        emailEntityRepository.save(emailEntity);
 
     }
 

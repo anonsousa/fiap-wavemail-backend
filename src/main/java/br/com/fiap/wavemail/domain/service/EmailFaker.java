@@ -3,7 +3,7 @@ package br.com.fiap.wavemail.domain.service;
 import br.com.fiap.wavemail.domain.enums.EmailPriority;
 import br.com.fiap.wavemail.domain.enums.EmailType;
 import br.com.fiap.wavemail.domain.model.EmailEntity;
-import br.com.fiap.wavemail.domain.repository.EmailRepository;
+import br.com.fiap.wavemail.domain.repository.EmailEntityRepository;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 public class EmailFaker {
     @Autowired
-    private EmailRepository emailRepository;
+    private EmailEntityRepository emailEntityRepository;
 
     public static final Faker FAKER = new Faker();
 
@@ -35,6 +35,6 @@ public class EmailFaker {
         emailEntity.setRead(false);
         emailEntity.setSent(false);
 
-        emailRepository.save(emailEntity);
+        emailEntityRepository.save(emailEntity);
     }
 }
