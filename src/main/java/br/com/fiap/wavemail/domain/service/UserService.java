@@ -2,6 +2,7 @@ package br.com.fiap.wavemail.domain.service;
 
 import br.com.fiap.wavemail.domain.dto.user.UserAddDto;
 import br.com.fiap.wavemail.domain.dto.user.UserReturnDto;
+import br.com.fiap.wavemail.domain.enums.UserRole;
 import br.com.fiap.wavemail.domain.model.UserEntity;
 import br.com.fiap.wavemail.domain.repository.UserEntityRepository;
 import br.com.fiap.wavemail.infra.exceptions.InvalidPasswordException;
@@ -10,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +26,15 @@ public class UserService {
 
     @Transactional
     public UserReturnDto createUser(UserAddDto user){
+        String encryptPassword = new BCryptPasswordEncoder().encode(user.password());
+
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);
+        userEntity.setPassword(encryptPassword);
+        userEntity.setRole(UserRole.USER);
         userEntity.setCreatedAt(LocalDateTime.now().withNano(0));
 
-        userRepository.save(userEntity);
-
-        return new UserReturnDto(userEntity);
+        return new UserReturnDto(userRepository.save(userEntity));
     }
 
     @Transactional(readOnly = true)
@@ -48,9 +52,11 @@ public class UserService {
     @Transactional
     public UserReturnDto updateUser(UUID id, UserAddDto user){
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found!"));
+        String encryptPassword = new BCryptPasswordEncoder().encode(user.password());
 
-        if(userEntity.getPassword().equals(user.password())){
+        if(userEntity.getPassword().equals(encryptPassword)){
             BeanUtils.copyProperties(user, userEntity);
+            userEntity.setPassword(encryptPassword);
             return new UserReturnDto(userEntity);
         } else {
             throw new InvalidPasswordException("Invalid Password!");
