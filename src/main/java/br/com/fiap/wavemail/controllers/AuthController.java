@@ -40,15 +40,22 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody @Valid AuthUserLoginDto authUserLogin){
+        // Cria o token de autenticação
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(authUserLogin.email(), authUserLogin.password());
 
+        // Autentica o usuário
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        TokenDto token = tokenService.generateToken((UserEntity) authentication.getPrincipal());
 
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+        // Obtém o usuário autenticado (que contém o ID do banco de dados)
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        // Gera o token JWT
+        TokenDto token = tokenService.generateToken(user);
+
+        // Retorna o ID do banco e o token
+        return ResponseEntity.status(HttpStatus.OK).body(new TokenDto(token.userId(), token.email(), token.token()));
     }
-
 
 
 
