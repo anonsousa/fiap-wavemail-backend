@@ -1,6 +1,5 @@
 package br.com.fiap.wavemail.infra.security;
 
-import br.com.fiap.wavemail.domain.enums.UserRole;
 import br.com.fiap.wavemail.domain.service.auth.VerifyToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

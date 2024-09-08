@@ -31,7 +31,7 @@ public class TokenService {
                     .withExpiresAt(generateExpireDate())
                     .sign(algorithm);
 
-            return new TokenDto(user.getEmail(), token);
+            return new TokenDto(user.getId(), user.getEmail(), token);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("JWT generation failed", exception);
         }
