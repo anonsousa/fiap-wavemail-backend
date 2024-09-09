@@ -52,11 +52,14 @@ public class UserService {
     @Transactional
     public UserReturnDto updateUser(UUID id, UserAddDto user){
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found!"));
-        String encryptPassword = new BCryptPasswordEncoder().encode(user.password());
 
-        if(userEntity.getPassword().equals(encryptPassword)){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        if(encoder.matches(user.password(), userEntity.getPassword()))
+        {
             BeanUtils.copyProperties(user, userEntity);
-            userEntity.setPassword(encryptPassword);
+
+            userEntity.setPassword(encoder.encode(user.password()));
             return new UserReturnDto(userEntity);
         } else {
             throw new InvalidPasswordException("Invalid Password!");

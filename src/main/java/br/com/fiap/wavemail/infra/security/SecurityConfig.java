@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/**").authenticated()
                         .anyRequest()
                         .authenticated())
                 .addFilterBefore(
