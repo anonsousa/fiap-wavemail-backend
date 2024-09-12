@@ -1,7 +1,9 @@
 package br.com.fiap.wavemail.domain.service;
 
+import br.com.fiap.wavemail.domain.dto.auth.AuthUserLoginDto;
 import br.com.fiap.wavemail.domain.dto.user.UserAddDto;
 import br.com.fiap.wavemail.domain.dto.user.UserReturnDto;
+import br.com.fiap.wavemail.domain.dto.user.UserUpdateDto;
 import br.com.fiap.wavemail.domain.enums.UserRole;
 import br.com.fiap.wavemail.domain.model.UserEntity;
 import br.com.fiap.wavemail.domain.repository.UserEntityRepository;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,6 +26,8 @@ public class UserService {
 
     @Autowired
     private UserEntityRepository userRepository;
+
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Transactional
     public UserReturnDto createUser(UserAddDto user){
@@ -50,20 +55,24 @@ public class UserService {
     }
 
     @Transactional
-    public UserReturnDto updateUser(UUID id, UserAddDto user){
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found!"));
+    public UserReturnDto updateUser(UUID id, String email, UserUpdateDto user){
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException("User not found!"));
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (email != null && userEntity.getEmail().equals(email)) {
+            if(encoder.matches(user.currentPassword(), userEntity.getPassword()))
+            {
+                userEntity.setName(user.name());
+                userEntity.setEmail(user.email());
+                userEntity.setPassword(encoder.encode(user.newPassword()));
+                userRepository.save(userEntity);
+                return new UserReturnDto(userEntity);
 
-        if(encoder.matches(user.password(), userEntity.getPassword()))
-        {
-            BeanUtils.copyProperties(user, userEntity);
-
-            userEntity.setPassword(encoder.encode(user.password()));
-            return new UserReturnDto(userEntity);
-        } else {
-            throw new InvalidPasswordException("Invalid Password!");
+            } else {
+                throw new InvalidPasswordException("Invalid Password!");
+            }
         }
+        throw new ItemNotFoundException("User not found!");
     }
 
     @Transactional
@@ -71,5 +80,19 @@ public class UserService {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ItemNotFoundException("User not found!"));
         userEntity.setEnabled(false);
         userRepository.save(userEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean verifyUser(AuthUserLoginDto user){
+        Optional<UserEntity> userEntity = userRepository.findUserByEmail(user.email());
+
+        if (userEntity.isPresent()) {
+            if (encoder.matches(user.password(), userEntity.get().getPassword())) {
+                return true;
+            }
+            return false;
+        }
+
+        return false;
     }
 }

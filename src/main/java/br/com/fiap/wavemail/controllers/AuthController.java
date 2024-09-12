@@ -40,13 +40,19 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody @Valid AuthUserLoginDto authUserLogin){
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(authUserLogin.email(), authUserLogin.password());
+        boolean verification = userService.verifyUser(authUserLogin);
 
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        TokenDto token = tokenService.generateToken((UserEntity) authentication.getPrincipal());
+        if (verification) {
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                    new UsernamePasswordAuthenticationToken(authUserLogin.email(), authUserLogin.password());
 
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+            Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+            TokenDto token = tokenService.generateToken((UserEntity) authentication.getPrincipal());
+
+            return ResponseEntity.status(HttpStatus.OK).body(token);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 

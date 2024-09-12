@@ -2,6 +2,7 @@ package br.com.fiap.wavemail.controllers;
 
 import br.com.fiap.wavemail.domain.dto.user.UserAddDto;
 import br.com.fiap.wavemail.domain.dto.user.UserReturnDto;
+import br.com.fiap.wavemail.domain.dto.user.UserUpdateDto;
 import br.com.fiap.wavemail.domain.service.UserService;
 import io.github.bucket4j.Bucket;
 import jakarta.validation.Valid;
@@ -37,9 +38,10 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<UserReturnDto> updateUser(@RequestParam("id") UUID id,
-                                                    @RequestBody @Valid UserAddDto user){
+                                                    @RequestParam("email") String email,
+                                                    @RequestBody @Valid UserUpdateDto user){
 
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, user));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, email, user));
     }
 
     @DeleteMapping
