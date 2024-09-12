@@ -1,0 +1,606 @@
+{
+  "info": {
+    "_postman_id": "1c07e50c-cb5b-4b58-a04c-086d7c72bdb3",
+    "name": "WaveMail",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29370669",
+    "_collection_link": "https://lively-robot-605842.postman.co/workspace/WaveMail_API~a86a4c67-d31d-49a5-a135-5eaa0700e568/collection/29370669-1c07e50c-cb5b-4b58-a04c-086d7c72bdb3?action=share&source=collection_link&creator=29370669"
+  },
+  "item": [
+    {
+      "name": "User Endpoints",
+      "item": [
+        {
+          "name": "Find User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ3YXZlbWFpbCIsInN1YiI6ImFudG9uaW9AZXhhbXBsZS5jb20iLCJleHAiOjE3MjQxMjYzMDV9.4NvaU77pO41PVaEJ2SfhmgIO-R-DxvvveDZkW6jS2YQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/user/find?id=c66c1543-2842-4e84-bfeb-b1046f989428",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "user",
+                "find"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/user",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ3YXZlbWFpbCIsInN1YiI6ImFudG9uZW9AZXhhbXBsZS5jb20iLCJleHAiOjE3MjYxNTQ1MTV9.ngikGidvDy-8c_2k1Ks6vpbsq-vfRGsii5M38dnAwng",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Antonio Silsa\",\n  \"email\": \"antoneo@example.com\",\n  \"currentPassword\": \"1234567899\",\n  \"newPassword\": \"1234567890\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/user?id=f4a637e0-2555-42c3-bc89-8d2df4a3b236&email=antoneo@example.com",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "f4a637e0-2555-42c3-bc89-8d2df4a3b236"
+                },
+                {
+                  "key": "email",
+                  "value": "antoneo@example.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/user?id=c346e9f2-ead9-49cd-a32a-2e9e4a771469",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "c346e9f2-ead9-49cd-a32a-2e9e4a771469"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "UserPreferences Endpoints",
+      "item": [
+        {
+          "name": "Create User Preference",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theme\": \"DARK\",\n  \"colorScheme\": \"#1d1d1d\",\n  \"user\": \"c346e9f2-ead9-49cd-a32a-2e9e4a771469\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/user/preferences",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "user",
+                "preferences"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Preference",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/user/preferences?id=c346e9f2-ead9-49cd-a32a-2e9e4a771469",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "user",
+                "preferences"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "c346e9f2-ead9-49cd-a32a-2e9e4a771469"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Preferences",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theme\": \"LIGHT\",\n  \"colorScheme\": \"#2b2b2b\",\n  \"user\": \"c346e9f2-ead9-49cd-a32a-2e9e4a771469\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/user/preferences?id=adcff9ad-d8d5-40c3-b51f-92f578e9cb20",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "user",
+                "preferences"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "adcff9ad-d8d5-40c3-b51f-92f578e9cb20"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Email Endpoints",
+      "item": [
+        {
+          "name": "Send Email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"to\": [\n        \"example1@example.com\",\n        \"example2@example.com\",\n        \"example2@example.com\"\n    ],\n    \"subject\": \"Update on the project\",\n    \"body\": \"Hello team, here is the latest update on our project. Please review the attached documents.\",\n    \"priority\": \"HIGH\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/mail/send?id=c66c1543-2842-4e84-bfeb-b1046f989428",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "mail",
+                "send"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Received Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/mail?userId=c66c1543-2842-4e84-bfeb-b1046f989428&mailId=33f7f540-2874-430d-84f5-593ee151106f",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "mail"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                },
+                {
+                  "key": "mailId",
+                  "value": "33f7f540-2874-430d-84f5-593ee151106f"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mock User Received Emails",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/mail/received?id=c66c1543-2842-4e84-bfeb-b1046f989428",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "mail",
+                "received"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Email",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/mail?userId=c66c1543-2842-4e84-bfeb-b1046f989428&mailId=6e09a04f-cbc3-472c-b6bf-806698c868ac",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "mail"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                },
+                {
+                  "key": "mailId",
+                  "value": "6e09a04f-cbc3-472c-b6bf-806698c868ac"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Calendar Endpoints",
+      "item": [
+        {
+          "name": "Create Calendar Event",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"title\": \"Project Update Meeting\",\n    \"description\": \"This is a detailed description of the upcoming project update meeting where all stakeholders will discuss the progress and next steps.\",\n    \"startTime\": \"2024-10-01T09:00:00\",\n    \"endTime\": \"2024-10-01T10:00:00\",\n    \"participantsEmails\": [\n        \"user1@example.com\"\n    ],\n    \"eventType\": \"IN_PERSON\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/calendar?userId=c66c1543-2842-4e84-bfeb-b1046f989428",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "calendar"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find Calendar Event",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/calendar?eventId=5bbafa7e-2609-4224-bcf1-510faa03a78c",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "calendar"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "5bbafa7e-2609-4224-bcf1-510faa03a78c"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find User Calendar Event",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/calendar/user?userId=c66c1543-2842-4e84-bfeb-b1046f989428",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "calendar",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Calendar Event",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Project Update Meetinggg\",\n    \"description\": \"This is a detailed description of the upcoming project update meeting where all stakeholders will discuss the progress and next steps.\",\n    \"startTime\": \"2024-12-01T09:00:00\",\n    \"endTime\": \"2024-12-01T13:30:00\",\n    \"participantsEmails\": [\n        \"user1@example.com\",\n        \"user53@example.com\"\n    ],\n    \"eventType\": \"ONLINE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/calendar?userId=c66c1543-2842-4e84-bfeb-b1046f989428&eventId=5bbafa7e-2609-4224-bcf1-510faa03a78c",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "calendar"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+                },
+                {
+                  "key": "eventId",
+                  "value": "5bbafa7e-2609-4224-bcf1-510faa03a78c"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Calendar Event",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Project Update Meetinggg\",\n    \"description\": \"This is a detailed description of the upcoming project update meeting where all stakeholders will discuss the progress and next steps.\",\n    \"startTime\": \"2024-12-01T09:00:00\",\n    \"endTime\": \"2024-12-01T13:30:00\",\n    \"participantsEmails\": [\n        \"user1@example.com\",\n        \"user53@example.com\"\n    ],\n    \"eventType\": \"ONLINE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/api/calendar?eventId=5bbafa7e-2609-4224-bcf1-510faa03a78c",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "calendar"
+              ],
+              "query": [
+                {
+                  "key": "eventId",
+                  "value": "5bbafa7e-2609-4224-bcf1-510faa03a78c"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth Endpoint",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Antonio\",\n  \"email\": \"antoneo@example.com\",\n  \"password\": \"1234567890\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/auth/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login and Auth User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"antoneo@example.com\",\n  \"password\": \"1234567899\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/auth/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
