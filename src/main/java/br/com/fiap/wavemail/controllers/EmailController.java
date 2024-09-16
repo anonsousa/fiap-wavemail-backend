@@ -31,6 +31,12 @@ public class EmailController {
         return ResponseEntity.status(HttpStatus.OK).body(emailService.getReceivedEmail(userId, mailId));
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<Page<EmailReturnReceivedDto>> getAllEmails(@RequestParam("userId") UUID id,
+                                                                     Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(emailService.findEmailsByUserId(id, pageable));
+    }
+
     @PostMapping("/send")
     public ResponseEntity<EmailReturnSendDto> sendEmail(@RequestParam("id") UUID id, @RequestBody @Valid EmailAddDto email){
         return ResponseEntity.status(HttpStatus.CREATED).body(emailService.sendEmail(id, email));

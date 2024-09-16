@@ -242,7 +242,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ3YXZlbWFpbCIsInN1YiI6ImFudG9uZW9AZXhhbXBsZS5jb20iLCJleHAiOjE3MjY1Mzc2ODZ9.wFfK1212_Z7E6CrLZhqMOzEeF2SlvrfFkXc7RNy9jo0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ3YXZlbWFpbCIsInN1YiI6ImFudG9uZW9AZXhhbXBsZS5jb20iLCJleHAiOjE3MjY1Mzg2MzR9._3lkfzRQHAGKoVMtVpyVhdtEwhbw5IcjFygMSgVyfbo",
 									"type": "string"
 								}
 							]
@@ -251,7 +251,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"to\": [\n        \"example1@example.com\",\n        \"example2@example.com\",\n        \"example2@example.com\"\n    ],\n    \"cc\": [\n        \"example1@example.com\"\n    ],\n    \"subject\": \"Update on the project\",\n    \"body\": \"Hello team, here is the latest update on our project. Please review the attached documents.\",\n    \"priority\": \"HIGH\",\n    \"flaged\": true\n}",
+							"raw": "{\n    \"to\": [\n        \"antoneo@example.com\",\n        \"example1@example.com\",\n        \"example2@example.com\",\n        \"example2@example.com\"\n    ],\n    \"cc\": [\n        \"example1@example.com\"\n    ],\n    \"subject\": \"Update on the project\",\n    \"body\": \"Hello team, here is the latest update on our project. Please review the attached documents.\",\n    \"priority\": \"HIGH\",\n    \"flaged\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -302,6 +302,42 @@
 								{
 									"key": "mailId",
 									"value": "33f7f540-2874-430d-84f5-593ee151106f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Received Emails by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ3YXZlbWFpbCIsInN1YiI6ImFudG9uZW9AZXhhbXBsZS5jb20iLCJleHAiOjE3MjY1Mzg5NDF9.LnfFRPg6zwAfLRGIbbonpwJKLYxGjiQOXJpp0dTL4Pw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/mail/find?userId=699cd138-349e-44aa-b22d-32e4dd096f74",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"mail",
+								"find"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "699cd138-349e-44aa-b22d-32e4dd096f74"
 								}
 							]
 						}

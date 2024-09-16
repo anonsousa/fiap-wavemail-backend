@@ -73,6 +73,16 @@ public class EmailService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public Page<EmailReturnReceivedDto> findEmailsByUserId(UUID userId, Pageable pageable) {
+        UserEntity user = userEntityRepository.findById(userId)
+                .orElseThrow(() -> new ItemNotFoundException("User not found!"));
+
+        Page<EmailEntity> emails = emailEntityRepository.findByEmailInToOrCc(user.getEmail(), pageable);
+
+        return emails.map(EmailReturnReceivedDto::new);
+    }
+
     @Transactional
     public void hideEmailforUser(UUID userId, UUID mailId) {
         UserEntity userEntity = userEntityRepository.findById(userId)
