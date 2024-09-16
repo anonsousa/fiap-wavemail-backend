@@ -55,12 +55,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserReturnDto updateUser(UUID id, String email, UserUpdateDto user){
+    public UserReturnDto updateUser(UUID id, UserUpdateDto user){
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("User not found!"));
 
-        if (email != null && userEntity.getEmail().equals(email)) {
-            if(encoder.matches(user.currentPassword(), userEntity.getPassword()))
+        if(encoder.matches(user.currentPassword(), userEntity.getPassword()))
             {
                 userEntity.setName(user.name());
                 userEntity.setEmail(user.email());
@@ -71,8 +70,6 @@ public class UserService {
             } else {
                 throw new InvalidPasswordException("Invalid Password!");
             }
-        }
-        throw new ItemNotFoundException("User not found!");
     }
 
     @Transactional

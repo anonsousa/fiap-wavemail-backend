@@ -38,10 +38,9 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<UserReturnDto> updateUser(@RequestParam("id") UUID id,
-                                                    @RequestParam("email") String email,
                                                     @RequestBody @Valid UserUpdateDto user){
 
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, email, user));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, user));
     }
 
     @DeleteMapping
