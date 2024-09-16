@@ -14,12 +14,16 @@ public record EmailAddDto(
         @Size(min = 1)
         List<@NotBlank @Email String> to,
 
+        List<@Email String> cc,
+
         @NotBlank
         @Size(min = 2, max = 360)
         String subject,
         @NotBlank
         String body,
-        @NotNull
-        EmailPriority priority
+
+        EmailPriority priority,
+
+        boolean flaged
 
 ) { }

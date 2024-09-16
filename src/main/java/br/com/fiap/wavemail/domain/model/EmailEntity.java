@@ -36,6 +36,11 @@ public class EmailEntity implements Serializable {
     private List<String> to;
 
     @ElementCollection
+    @CollectionTable(name = "email_cc_recipients", joinColumns = @JoinColumn(name = "email_id"))
+    @Column(name = "recipient_email_cc")
+    private List<String> cc;
+
+    @ElementCollection
     @CollectionTable(name = "hidden_to_users", joinColumns = @JoinColumn(name = "email_id"))
     @Column(name = "user_id")
     private List<UUID> hiddenTo;
@@ -51,9 +56,10 @@ public class EmailEntity implements Serializable {
     private EmailType type;
 
     @Enumerated(EnumType.STRING)
-    private EmailPriority priority;
+    private EmailPriority priority = EmailPriority.LOW;
 
     private boolean isRead;
     private boolean isSent;
+    private boolean flaged = Boolean.FALSE;
 
 }

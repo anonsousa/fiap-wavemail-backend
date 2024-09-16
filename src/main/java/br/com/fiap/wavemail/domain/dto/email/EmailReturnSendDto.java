@@ -11,10 +11,12 @@ public record EmailReturnSendDto(
         UUID id,
         String from,
         List<String> to,
+        List<String> cc,
         String subject,
         String body,
         LocalDateTime date,
-        EmailPriority priority
+        EmailPriority priority,
+        boolean flaged
 ) {
 
     public EmailReturnSendDto(EmailEntity email) {
@@ -22,10 +24,12 @@ public record EmailReturnSendDto(
                 email.getId(),
                 email.getFrom(),
                 email.getTo(),
+                email.getCc(),
                 email.getSubject(),
                 email.getBody(),
                 email.getDate(),
-                email.getPriority()
+                email.getPriority(),
+                email.isFlaged()
         );
     }
 

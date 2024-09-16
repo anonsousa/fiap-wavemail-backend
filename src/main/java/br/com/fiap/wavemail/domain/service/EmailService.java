@@ -35,10 +35,12 @@ public class EmailService {
         EmailEntity emailEntity = new EmailEntity();
 
         List<String> uniqueRecipients = new ArrayList<>(new LinkedHashSet<>(email.to()));
+        List<String> ccRecipients = new ArrayList<>(new LinkedHashSet<>(email.cc()));
 
         BeanUtils.copyProperties(email, emailEntity);
         emailEntity.setFrom(userEntity.getEmail());
         emailEntity.setTo(uniqueRecipients);
+        emailEntity.setCc(ccRecipients);
         emailEntity.setDate(LocalDateTime.now().withNano(0));
         emailEntity.setSent(true);
 

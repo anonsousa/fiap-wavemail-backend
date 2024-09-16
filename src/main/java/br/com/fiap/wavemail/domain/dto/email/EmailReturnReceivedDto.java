@@ -12,13 +12,15 @@ public record EmailReturnReceivedDto(
         UUID id,
         String from,
         List<String> to,
+        List<String> cc,
         String subject,
         String body,
         LocalDateTime date,
         EmailType type,
         EmailPriority priority,
         boolean isRead,
-        boolean isSent
+        boolean isSent,
+        boolean flaged
 ) {
 
     public EmailReturnReceivedDto(EmailEntity email) {
@@ -26,13 +28,15 @@ public record EmailReturnReceivedDto(
                 email.getId(),
                 email.getFrom(),
                 email.getTo(),
+                email.getCc(),
                 email.getSubject(),
                 email.getBody(),
                 email.getDate(),
                 email.getType(),
                 email.getPriority(),
                 email.isRead(),
-                email.isSent()
+                email.isSent(),
+                email.isFlaged()
         );
     }
 

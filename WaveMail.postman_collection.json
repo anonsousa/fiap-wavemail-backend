@@ -237,11 +237,21 @@
 				{
 					"name": "Send Email",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ3YXZlbWFpbCIsInN1YiI6ImFudG9uZW9AZXhhbXBsZS5jb20iLCJleHAiOjE3MjY1Mzc2ODZ9.wFfK1212_Z7E6CrLZhqMOzEeF2SlvrfFkXc7RNy9jo0",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"to\": [\n        \"example1@example.com\",\n        \"example2@example.com\",\n        \"example2@example.com\"\n    ],\n    \"subject\": \"Update on the project\",\n    \"body\": \"Hello team, here is the latest update on our project. Please review the attached documents.\",\n    \"priority\": \"HIGH\"\n}",
+							"raw": "{\n    \"to\": [\n        \"example1@example.com\",\n        \"example2@example.com\",\n        \"example2@example.com\"\n    ],\n    \"cc\": [\n        \"example1@example.com\"\n    ],\n    \"subject\": \"Update on the project\",\n    \"body\": \"Hello team, here is the latest update on our project. Please review the attached documents.\",\n    \"priority\": \"HIGH\",\n    \"flaged\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -249,7 +259,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/mail/send?id=c66c1543-2842-4e84-bfeb-b1046f989428",
+							"raw": "localhost:8080/api/mail/send?id=699cd138-349e-44aa-b22d-32e4dd096f74",
 							"host": [
 								"localhost"
 							],
@@ -262,7 +272,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "c66c1543-2842-4e84-bfeb-b1046f989428"
+									"value": "699cd138-349e-44aa-b22d-32e4dd096f74"
 								}
 							]
 						}
@@ -575,7 +585,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"antoneo@example.com\",\n  \"password\": \"1234567899\"\n}",
+							"raw": "{\n  \"email\": \"antoneo@example.com\",\n  \"password\": \"1234567890\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
