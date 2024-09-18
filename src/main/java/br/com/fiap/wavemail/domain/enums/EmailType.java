@@ -1,6 +1,4 @@
 package br.com.fiap.wavemail.domain.enums;
-
-import java.util.Arrays;
 import java.util.Random;
 
 public enum EmailType {
